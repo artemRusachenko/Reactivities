@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "formic": "^0.0.10",
     "react-toastify": "^10.0.4"
   }
 }
