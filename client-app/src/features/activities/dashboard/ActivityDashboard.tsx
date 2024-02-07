@@ -14,7 +14,7 @@ function ActivitiyDashboard() {
     if (activityRegistry.size <= 1) loadActivities();
   }, [loadActivities, activityRegistry.size]);
 
-  if (activityStore.loadingInitial) return <LoadingComponent />;
+  if (activityStore.loadingInitial) return <LoadingComponent content="Loading activties..."/>;
 
   return (
     <Grid>
