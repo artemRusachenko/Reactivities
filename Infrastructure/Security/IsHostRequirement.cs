@@ -29,7 +29,9 @@ namespace Infrastructure.Security
             var actvityId = Guid.Parse(_httpContextAccessor.HttpContext?.Request.RouteValues
             .SingleOrDefault(x => x.Key == "id").Value?.ToString());
 
-            var attendee = _dbContext.ActivityAttendees.AsNoTracking().SingleOrDefaultAsync(x => x.AppUserId == userId && x.ActivityId == actvityId).Result;
+            var attendee = _dbContext.ActivityAttendees
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.AppUserId == userId && x.ActivityId == actvityId).Result;
 
             if(attendee == null) return Task.CompletedTask;
 
