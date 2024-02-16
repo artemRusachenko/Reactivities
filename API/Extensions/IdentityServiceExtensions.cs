@@ -12,6 +12,7 @@ namespace API.Extensions
     public static class IdentityServiceExtensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config){
+            
             services.AddIdentityCore<AppUser>(opt =>{
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.User.RequireUniqueEmail = true;
@@ -19,7 +20,6 @@ namespace API.Extensions
             .AddEntityFrameworkStores<DataContext>();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
-
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(opt => {
                 opt.TokenValidationParameters = new TokenValidationParameters{
@@ -29,12 +29,14 @@ namespace API.Extensions
                     ValidateAudience = false,
                 };
             });
+
             services.AddAuthorization(opt => 
             {
                 opt.AddPolicy("IsActivityHost", policy => {
                     policy.Requirements.Add(new IsHostRequirement());
                 });
             });
+
             services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
             services.AddScoped<TokenService>();
 

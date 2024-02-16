@@ -35,7 +35,7 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers();//routing from http request to controller method
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
