@@ -49,7 +49,7 @@ export default class UserStore {
     if (this.user) this.user.image = image;
   };
 
-  // deleteImage = (id: string) => {
-  //   if (this.user) this.user.
-  // }
+  setDisplayName = (displayName: string) =>{
+    if(this.user) this.user.displayName = displayName;
+  }
 }
