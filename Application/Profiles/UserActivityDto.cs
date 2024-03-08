@@ -9,6 +9,6 @@ namespace Application.Profiles
         public string Category { get; set; }
         public DateTime Date { get; set; }
         [JsonIgnore]
-        public string HostUserName { get; set; }
+        public bool IsHost { get; set; }
     }
 }
