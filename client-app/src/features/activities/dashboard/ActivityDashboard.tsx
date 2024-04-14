@@ -31,6 +31,8 @@ function ActivitiyDashboard() {
           <>
             <ActivityListItemPlaceholder />
             <ActivityListItemPlaceholder />
+            <ActivityListItemPlaceholder />
+            <ActivityListItemPlaceholder />
           </>
         ) : (
           <InfiniteScroll

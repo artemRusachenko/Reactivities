@@ -7,7 +7,7 @@ import { useStore } from "../stores/store";
 import { useEffect } from "react";
 import LoadingComponent from "./LoadingComponenet";
 import ModalContainer from "../common/modals/ModalContainer";
-// import { ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 
 export default observer(function App() {
@@ -24,11 +24,11 @@ export default observer(function App() {
 
   if (!commonStore.appLoaded)
     return <LoadingComponent content="Loading app..." />;
-// position="bottom-right" hideProgressBar theme="colored"
+
   return (
     <>
     <ModalContainer/>
-      {/* <ToastContainer /> */}
+      <ToastContainer position="bottom-right" hideProgressBar theme="colored"/>
       {location.pathname === "/" ? (
         <HomePage />
       ) : (

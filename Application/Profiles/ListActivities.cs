@@ -37,13 +37,13 @@ namespace Application.Profiles
                 switch(request.Predicate)
                 {
                     case "past":
-                        query.Where(x => x.Date <= DateTime.UtcNow);
+                        query = query.Where(x => x.Date <= DateTime.UtcNow);
                         break;
                     case "hosting":
-                        query.Where(x => x.IsHost);
+                        query = query.Where(x => x.IsHost);
                         break;
                     default:
-                        query.Where(x => x.Date >= DateTime.UtcNow);
+                        query = query.Where(x => x.Date >= DateTime.UtcNow);
                         break;
                 }
                 var activities = await query.ToListAsync();
