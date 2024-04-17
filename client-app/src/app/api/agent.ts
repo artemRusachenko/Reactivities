@@ -37,6 +37,9 @@ axios.interceptors.response.use(
     const { data, status, config } = error.response! as AxiosResponse;
     switch (status) {
       case 400:
+        if (typeof data === "string") {
+          toast.error(data);
+        }
         if (config.method === "get" && data.errors.hasOwnProperty("id")) {
           router.navigate("/not-found");
         }
@@ -48,9 +51,7 @@ axios.interceptors.response.use(
             }
           }
           throw modalStateErrors.flat();
-        } else {
-          toast.error(data);
-        }
+        } 
         break;
       case 401:
         toast.error("unauthorised");
