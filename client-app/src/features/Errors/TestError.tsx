@@ -4,41 +4,40 @@ import { useState } from "react";
 import ValidationError from "./ValidationError";
 
 export default function TestErrors() {
-  const baseUrl = import.meta.env.VITE_API_URL + "/";
   const [errors, setErrors] = useState(null);
 
   function handleNotFound() {
     axios
-      .get(baseUrl + "buggy/not-found")
+      .get("/buggy/not-found")
       .catch((err) => console.log(err.response));
   }
 
   function handleBadRequest() {
     axios
-      .get(baseUrl + "buggy/bad-request")
+      .get("/buggy/bad-request")
       .catch((err) => console.log(err.response));
   }
 
   function handleServerError() {
     axios
-      .get(baseUrl + "buggy/server-error")
+      .get("/buggy/server-error")
       .catch((err) => console.log(err.response));
   }
 
   function handleUnauthorised() {
     axios
-      .get(baseUrl + "buggy/unauthorised")
+      .get("/buggy/unauthorised")
       .catch((err) => console.log(err.response));
   }
 
   function handleBadGuid() {
     axios
-      .get(baseUrl + "activities/notaguid")
+      .get("/activities/notaguid")
       .catch((err) => console.log(err.response));
   }
 
   function handleValidationError() {
-    axios.post(baseUrl + "activities", {}).catch((err) => setErrors(err));
+    axios.post("/activities", {}).catch((err) => setErrors(err));
   }
 
   return (
