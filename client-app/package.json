@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@greatsumini/react-facebook-login": "^3.3.3",
     "@microsoft/signalr": "^8.0.0",
     "@types/react-calendar": "^4.1.0",
     "axios": "^1.6.5",
@@ -47,6 +48,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "typescript": "^5.2.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "vite-plugin-mkcert": "^1.17.5"
   }
 }

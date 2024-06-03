@@ -4,12 +4,18 @@ import { Button, Header, Label } from "semantic-ui-react";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
+interface LoginFormValues {
+  email: string;
+  password: string;
+  error?: string | null;
+}
+
 export default observer(function LoginForm() {
   const { userStore } = useStore();
   return (
-    <Formik
+    <Formik<LoginFormValues>
       initialValues={{ email: "", password: "", error: null }}
-      onSubmit={(values, {setErrors}) => userStore.login(values).catch(() => 
+      onSubmit={(values, {setErrors}) => userStore.login(values).catch(_ => 
       setErrors({error: 'Invalid email or passsword'}))}
     >
       {({ handleSubmit, isSubmitting, errors}) => (
@@ -19,7 +25,10 @@ export default observer(function LoginForm() {
           <MyTextInput placeholder="Password" name="password" type="password" />
           <ErrorMessage
             name='error' render={() => 
-            <Label style={{marginBottom: 10}} basic color='red' content={errors.error} />}
+              errors.error ? (
+                <Label style={{marginBottom: 10}} basic color='red' content={errors.error} />):null
+              
+            }
           />
           <Button loading={isSubmitting} positive content="Login" type="submit" fluid />
         </Form>

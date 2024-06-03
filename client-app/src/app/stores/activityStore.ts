@@ -6,6 +6,7 @@ import { store } from "./store";
 import { Profile } from "../models/profile";
 import { Pagination, PagingParams } from "../models/pagination";
 
+
 export default class ActivityStore {
   activityRegistry = new Map<string, Activity>();
   selectedActivity: Activity | undefined = undefined;
