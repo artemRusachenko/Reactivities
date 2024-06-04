@@ -89,7 +89,7 @@ namespace API.Controllers
             var fbVerifyKeys = _config["Facebook:AppId"] + "|" + _config["Facebook:ApiSecret"];
             var verifyTokenResponse = await _httpClient.GetAsync($"debug_token?input_token=${accessToken}&access_token={fbVerifyKeys}");
 
-            if(!verifyTokenResponse.IsSuccessStatusCode) return Unauthorized();
+            if(!verifyTokenResponse.IsSuccessStatusCode) return Unauthorized("The token isn't valid");
 
             var fbUrl = $"me?access_token={accessToken}&fields=name,email,picture.width(100).height(100)";
 
