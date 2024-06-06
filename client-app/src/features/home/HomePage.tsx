@@ -57,7 +57,7 @@ export default observer(function HomePage() {
               Or
             </Divider>
             <FacebookLogin
-              appId="4220953954798001"
+              appId="767104662259810"
               onSuccess={(response: SuccessResponse) => {
                 userStore.facebookLogin(response.accessToken)
                 console.log("Login success!", response);
