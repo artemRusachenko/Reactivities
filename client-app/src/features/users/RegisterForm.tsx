@@ -17,8 +17,10 @@ export default observer(function RegisterForm() {
         password: "",
         error: null,
       }}
-      onSubmit={(values, { setErrors }) =>
+      onSubmit={(values, { setErrors }) =>{
+        console.log(values)
         userStore.register(values).catch((error) => setErrors({ error }))
+      }
       }
       validationSchema={Yup.object({
         displayName: Yup.string().required(),

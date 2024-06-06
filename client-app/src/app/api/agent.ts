@@ -14,7 +14,7 @@ const sleep = (delay: number) => {
 };
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-
+console.log(axios.defaults.baseURL);
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
 axios.interceptors.request.use((config) => {
