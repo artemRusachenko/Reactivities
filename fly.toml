@@ -10,7 +10,7 @@ primary_region = 'waw'
   ASPNETCORE_URLS="http://+:8080"
   Cloudinary__CloudName="dzdxmbo3b"
   Cloudinary__ApiKey="668475493447795"
-  Facebook_AppId="4220953954798001"
+  Facebook_AppId="767104662259810"
 
 [build]
   image = 'artemrusachenko/reactivities:latest'
