@@ -13,6 +13,7 @@
   "dependencies": {
     "@greatsumini/react-facebook-login": "^3.3.3",
     "@microsoft/signalr": "^8.0.0",
+    "@react-oauth/google": "^0.12.1",
     "@types/react-calendar": "^4.1.0",
     "axios": "^1.6.5",
     "date-fns": "^2.30.0",

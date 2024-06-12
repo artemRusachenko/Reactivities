@@ -26,15 +26,18 @@ axios.interceptors.request.use((config) => {
 axios.interceptors.response.use(
   async (response) => {
     if (import.meta.env.DEV) await sleep(1000);
-    const pagination = response.headers['pagination']
-    if(pagination){
-      response.data = new PaginatedResult(response.data, JSON.parse(pagination));
-      return response as AxiosResponse<PaginatedResult<any>>
+    const pagination = response.headers["pagination"];
+    if (pagination) {
+      response.data = new PaginatedResult(
+        response.data,
+        JSON.parse(pagination)
+      );
+      return response as AxiosResponse<PaginatedResult<any>>;
     }
     return response;
   },
   (error: AxiosError) => {
-    const { data, status, config } = error.response! as AxiosResponse;
+    const { data, status, config, headers } = error.response! as AxiosResponse;
     switch (status) {
       case 400:
         if (typeof data === "string") {
@@ -51,9 +54,20 @@ axios.interceptors.response.use(
             }
           }
           throw modalStateErrors.flat();
-        } 
+        }
         break;
       case 401:
+        if (
+          status === 401 &&
+          headers["www-authenticate"]?.startsWith(
+            'Bearer error="invalid_token"'
+          )
+        ) {
+          store.userStore.logout();
+          toast.error("Session expired - please login again");
+        } else {
+          toast.error("unauthorised");
+        }
         toast.error("unauthorised");
         break;
       case 403:
@@ -71,7 +85,6 @@ axios.interceptors.response.use(
   }
 );
 
-
 const requests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),
   post: <T>(url: string, body: {}) =>
@@ -81,8 +94,10 @@ const requests = {
 };
 
 const Activities = {
-  list: (params: URLSearchParams) => axios.get<PaginatedResult<Activity[]>>("/activities", {params})
-    .then(responseBody),
+  list: (params: URLSearchParams) =>
+    axios
+      .get<PaginatedResult<Activity[]>>("/activities", { params })
+      .then(responseBody),
   details: (id: string) => requests.get<Activity>(`/activities/${id}`),
   create: (activity: ActivityFormValues) =>
     requests.post<void>("/activities", activity),
@@ -94,16 +109,18 @@ const Activities = {
 
 const Account = {
   current: () => requests.get<User>("/account"),
-  login: (user: UserFormValues) =>
-    requests.post<User>("/account/login", user),
+  login: (user: UserFormValues) => requests.post<User>("/account/login", user),
   register: (user: UserFormValues) =>
     requests.post<User>("/account/register", user),
-  fbLogin: (accessToken: string) => requests.post<User>(`/account/fbLogin?accessToken=${accessToken}`, {})
+  fbLogin: (accessToken: string) =>
+    requests.post<User>(`/account/fbLogin?accessToken=${accessToken}`, {}),
+  refreshToken: () => requests.post<User>("/account/refreshToken", {}),
 };
 
 const Profiles = {
   get: (userName: string) => requests.get<Profile>(`/profiles/${userName}`),
-  updateProfile: (profile: Partial<Profile>) => requests.put<Profile>(`/profiles`, profile),
+  updateProfile: (profile: Partial<Profile>) =>
+    requests.put<Profile>(`/profiles`, profile),
   uploadPhoto: (file: Blob) => {
     let formData = new FormData();
     formData.append("File", file);
@@ -113,9 +130,14 @@ const Profiles = {
   },
   setMainPhoto: (id: string) => requests.post(`/photos/${id}/setMain`, {}),
   deletePhoto: (id: string) => requests.del(`/photos/${id}`),
-  updateFollowing:(userName: string) => requests.post(`/follow/${userName}`, {}),
-  listFollowings: (userName: string, predicate: string) => requests.get<Profile[]>(`/follow/${userName}?predicate=${predicate}`),
-  listActivities: (userName: string, predicate: string) => requests.get<UserActivity[]>(`/profiles/${userName}/activities?predicate=${predicate}`)
+  updateFollowing: (userName: string) =>
+    requests.post(`/follow/${userName}`, {}),
+  listFollowings: (userName: string, predicate: string) =>
+    requests.get<Profile[]>(`/follow/${userName}?predicate=${predicate}`),
+  listActivities: (userName: string, predicate: string) =>
+    requests.get<UserActivity[]>(
+      `/profiles/${userName}/activities?predicate=${predicate}`
+    ),
 };
 
 const agent = {

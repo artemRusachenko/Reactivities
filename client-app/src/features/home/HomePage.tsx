@@ -15,6 +15,7 @@ import FacebookLogin, {
   FailResponse,
   SuccessResponse,
 } from "@greatsumini/react-facebook-login";
+// import { GoogleLogin } from "@react-oauth/google";
 
 export default observer(function HomePage() {
   const { userStore, modalStore } = useStore();
@@ -59,15 +60,24 @@ export default observer(function HomePage() {
             <FacebookLogin
               appId="767104662259810"
               onSuccess={(response: SuccessResponse) => {
-                userStore.facebookLogin(response.accessToken)
+                userStore.facebookLogin(response.accessToken);
                 console.log("Login success!", response);
-
               }}
               onFail={(response: FailResponse) => {
                 console.log("Login failed!", response);
               }}
-              className={`ui button facebook huge inverted ${userStore.fbLoading && 'loading'}`}
+              className={`ui button facebook huge inverted ${
+                userStore.fbLoading && "loading"
+              }`}
             />
+            {/* <GoogleLogin
+              onSuccess={() => {
+                console.log("Login success!");
+              }}
+              onError={() => {
+                console.log("Login failed!");
+              }}
+            /> */}
           </>
         )}
       </Container>

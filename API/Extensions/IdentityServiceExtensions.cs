@@ -27,6 +27,8 @@ namespace API.Extensions
                     IssuerSigningKey = key,
                     ValidateIssuer = false,
                     ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
                 };
                 opt.Events = new JwtBearerEvents{
                     OnMessageReceived = context =>
@@ -52,9 +54,7 @@ namespace API.Extensions
             services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
             services.AddScoped<TokenService>();
 
-
             return services;
-
         }
     }
 }
